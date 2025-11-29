@@ -1,0 +1,45 @@
+[project]
+name = "github-crawler"
+version = "0.1.0"
+description = "A robust, asynchronous Python crawler for Github search results"
+readme = "README.md"
+requires-python = ">=3.13"
+dependencies = [
+    "httpx>=0.28.1",
+    "orjson>=3.11.4",
+    "selectolax>=0.4.4",
+    "h2>=4.1.0",
+    "pydantic-settings>=2.0.0",
+]
+
+[dependency-groups]
+dev = [
+    "mypy>=1.19.0",
+    "pytest>=9.0.1",
+    "pytest-cov>=7.0.0",
+    "pytest-asyncio>=0.23.5",
+    "ruff>=0.14.7",
+    "respx>=0.20.2",
+]
+
+[project.scripts]
+crawler = "github_crawler.cli:main"
+
+[tool.uv]
+package = true
+
+[tool.hatch.build.targets.wheel]
+packages = ["github_crawler"]
+
+[tool.ruff]
+line-length = 120
+target-version = "py313"
+
+[tool.ruff.lint]
+select = ["E", "F", "I", "UP", "B"]
+
+[tool.pytest.ini_options]
+pythonpath = ["."]
+testpaths = ["tests"]
+addopts = "--cov=github_crawler --cov-report=term-missing"
+asyncio_mode = "auto"
